@@ -1,0 +1,26 @@
+{% extends 'master' %}
+
+{% block content %}
+<div class="container">
+  <h2>New user</h2>
+  <br>
+
+  {{ form.open({ action: 'PersonController.store' }) }}
+    {{ csrfField }}
+    <fieldset class="form-group">
+      {{ form.label('name', 'Enter Name')}}
+      {{ form.text('name', null, { class: 'form-control' }) }}
+    </fieldset>
+    <fieldset class="form-group">
+      {{ form.label('lastname', 'Enter Lastname') }}
+      {{ form.text('lastname', null, { class: 'form-control' }) }}
+    </fieldset>
+    <fieldset class="form-group">
+      {{ form.label('age', 'Enter Age') }}
+      {{ form.text('age', null, { class: 'form-control' }) }}
+    </fieldset>
+
+    {{ form.submit('Create', 'create', { class: 'btn btn-primary btn-block' }) }}
+  {{ form.close() }}
+</div>
+{% endblock %}

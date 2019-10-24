@@ -1,0 +1,33 @@
+{% extends 'master' %}
+
+{% block content %}
+<div class="container">
+  <h1>Person all</h1>
+
+  {{ linkToAction('PersonController.create','New Person')}}
+<table class="table table-bordered">
+    <theadr>
+      <tr>
+        <th>Name</th>
+        <th>Lastname</th>
+        <th>age</th>
+      </tr>
+    </theadr>
+    <tbody>
+      {% for person in people %}
+        <tr>
+          <td>{{ person.name }}</td>
+          <td>{{ person.lastname }}</td>
+          {% if person.age > 20%}
+            <td>old</td>
+          {% else %}
+            <td>{{ person.age }}</td>
+          {% endif %}
+
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+

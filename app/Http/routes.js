@@ -18,3 +18,7 @@
 const Route = use('Route')
 
 Route.on('/').render('welcome')
+
+// Route.resource()
+
+Route.resource('/person','PersonController')

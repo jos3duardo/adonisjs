@@ -1,0 +1,15 @@
+{% extends 'master' %}
+
+{% block content %}
+<div class="container">
+  <h2>Showing person - {{ person.name}}</h2>
+  <br>
+  <br>
+  Lastname: {{ person.lastname}}
+  <br>
+  <br>
+  Age: {{person.age}}
+
+  {{linkToAction('PersonController.index','View all people')}}
+</div>
+{% endblock %}

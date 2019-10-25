@@ -4,18 +4,23 @@
 <div class="container">
   <h1>Person all</h1>
 
-  {{ linkToAction('PersonController.create','New Person', { class: 'btn btn-primary' } )}}
-<table class="responsive-table">
+  {{ linkToAction('PersonController.create','New Person',
+  { class: 'waves-effect waves-light btn-small' })
+   }}
+  <table class="responsive-table">
     <thead>
       <tr>
+        <th>#</th>
         <th>Name</th>
         <th>Lastname</th>
         <th>age</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       {% for person in people %}
         <tr>
+          <td>{{ person.id }}</td>
           <td>{{ person.name }}</td>
           <td>{{ person.lastname }}</td>
           {% if person.age > 20%}
@@ -23,7 +28,11 @@
           {% else %}
             <td>{{ person.age }}</td>
           {% endif %}
-
+          <td>
+            {{ linkToAction('PersonController.edit' , 'Edit',{ id: person.id}) }} |
+            {{ linkToAction('PersonController.show' , 'View',{ id: person.id}) }} |
+            {{ linkToAction('PersonController.destroy', 'Delete', { id: person.id}) }}
+          </td>
         </tr>
       {% endfor %}
     </tbody>

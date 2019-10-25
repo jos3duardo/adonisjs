@@ -5,21 +5,22 @@
   <h2>Update user</h2>
   <br>
 
-  {{ form.open({ action: 'PersonController.store' }) }}
+  {{ form.open({ action: 'PersonController.update',params: {id: person.id} }) }}
     {{ csrfField }}
-      <fieldset class="form-group">
+      <div class="input-field col s12">
         {{ form.label('name', 'Enter Name')}}
         {{ form.text('name', person.name, { class: 'form-control' }) }}
-      </fieldset>
-      <fieldset class="form-group">
+        {{ form.hidden('id', person.id) }}
+      </div>
+        <div class="input-field col s12">
         {{ form.label('lastname', 'Enter Lastname') }}
         {{ form.text('lastname', person.lastname, { class: 'form-control' }) }}
-      </fieldset>
-      <fieldset class="form-group">
+      </div>
+        <div class="input-field col s12">
         {{ form.label('age', 'Enter Age') }}
         {{ form.text('age', person.age, { class: 'form-control' }) }}
-      </fieldset>
-    {{ form.submit('Create', 'create', { class: 'btn btn-primary btn-block' }) }}
+      </div>
+    {{ form.submit('Update', 'update', { class: 'btn btn-primary btn-block' }) }}
   {{ form.close() }}
 </div>
 {% endblock %}

@@ -8,7 +8,7 @@ class PersonController {
     const people = yield Person.all()
 
     yield response.sendView('personAll',{
-      people: people
+      people: people.toJSON()
     })
   }
 
@@ -18,6 +18,7 @@ class PersonController {
 
   * store(request, response) {
     const data = request.only('name','lastname','age')
+
     yield Person.create(data)
 
     response.redirect('/person')
@@ -51,17 +52,37 @@ class PersonController {
   }
 
   * update(request, response) {
-    const person = yield Person.findBy('id', response.param('id'))
-    const data = request.only('name','lastname','age','id')
-    person.fill(data)
+    const id = request.param('id')
+    const person = yield Person.find(id)
 
-    yield person.save()
+    if (person){
+      person.name = request.only('name')
+      person.lastname = request.only('lastname')
+      person.age = request.only('age')
 
-    response.redirect('/person')
+      response.redirect('/person')
+
+      return
+    }
+
+    response.notFound()
+
+    //
+    // const person = yield Person.findBy('id', request.param('id'))
+    // const data = request.only('name','lastname','age','id')
+    // person.fill(data)
+    //
+    // yield person.save()
+    //
+    // response.redirect('/person')
   }
 
-  * destroy(request, response) {
-    //
+  * destroy(request, response,id) {
+      const person = yield Person.findBy('id', id)
+
+      yield person.delete()
+
+      response.redirect('/person')
   }
 
 }

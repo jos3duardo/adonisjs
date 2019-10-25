@@ -5,25 +5,8 @@ const Person = use('App/Model/Person')
 class PersonController {
 
   * index(request, response) {
-    // const person = yield Person.all()
+    const people = yield Person.all()
 
-    const people = [
-      {
-        name: 'Jose',
-        lastname: 'Eduardo',
-        age: 29
-      },
-      {
-        name: 'Loana',
-        lastname: 'Sousa',
-        age: 28
-      },
-      {
-        name: 'Cecilia',
-        lastname: 'Lopes',
-        age: 22
-      }
-    ]
     yield response.sendView('personAll',{
       people: people
     })
@@ -34,19 +17,47 @@ class PersonController {
   }
 
   * store(request, response) {
-    //
+    const data = request.only('name','lastname','age')
+    yield Person.create(data)
+
+    response.redirect('/person')
   }
 
   * show(request, response) {
-    response.send(request.get())
+
+    const id = request.param('id')
+    const person = yield Person.find(id)
+
+    if (person){
+      yield response.sendView('personShow',{
+        person
+      })
+      return
+    }
+    response.notFound()
   }
 
   * edit(request, response) {
-    //
+    const id = request.param('id')
+    const person = yield Person.find(id)
+
+    if (person){
+      yield response.sendView('personUpdate',{
+        person
+      })
+      return
+    }
+    response.notFound()
   }
 
   * update(request, response) {
-    //
+    const person = yield Person.findBy('id', response.param('id'))
+    const data = request.only('name','lastname','age','id')
+    person.fill(data)
+
+    yield person.save()
+
+    response.redirect('/person')
   }
 
   * destroy(request, response) {
